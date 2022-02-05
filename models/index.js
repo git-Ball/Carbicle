@@ -1,6 +1,8 @@
+
 const mongoose = require('mongoose');
 
 require('./Car')
+require('./Accessory.js')
 // 127.0.0.1
 const connectionString = 'mongodb://127.0.0.1/carbicle';
 // const connectionString = 'mongodb://localhost:27017/carbicle';
@@ -12,6 +14,14 @@ async function init() {
       useUnifiedTopology: true
     });
     console.log('DB Connected!!!!!!!');
+
+    // await Car.create({
+    //   "name": "Subaru Impreza",
+    //   "description": "Over powered beast with twin-turbo.",
+    //   "imageUrl": "subImpreza.jpg",
+    //   "price": 18200
+    // })
+
     mongoose.connection.on("error", (err) => {
       console.error("Database Error");
       console.error(err);

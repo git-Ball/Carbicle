@@ -13,9 +13,9 @@ module.exports = {
   },
   async post(req, res) {
     const id= req.params.id;
-    console.log('------- ID>>', id)
+    // console.log('------- ID>>', id)
     // console.log("Confirmided deletion", req.params.id);
-    res.redirect('/')
+    // res.redirect('/')
     try{
         await req.storage.deleteById(id)
     console.log("Confirmided deletion", req.params.id);
@@ -24,6 +24,7 @@ module.exports = {
 
     }
     catch(err){
+      console.log('Attempted to delete not-existed id',(id))
     res.redirect('404')
     }
   },

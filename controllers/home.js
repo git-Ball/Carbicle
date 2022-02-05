@@ -4,7 +4,7 @@ module.exports ={
         let query = req.query;
       const cars =  await req.storage.getAll(query); //req.query
 
-      console.log('v home',cars);
+     
     //   const ctx ={
     //       title: Cubicle,
     //       cars
