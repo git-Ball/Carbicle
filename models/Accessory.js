@@ -7,5 +7,5 @@ const accessorySchema = new Schema({
     price:{type:Number,minL:0}
 });
 
-const Accessory =model('Accessory',accessorySchema)
-module.exports =Accessory;
+const Accessory = model('Accessory',accessorySchema)
+module.exports = Accessory;

@@ -1,14 +1,15 @@
 
 const Car = require("../models/Car.js");
+const { carViewModel } = require("./util.js");
 
 async function getById(id) {
-  const car = await Car.findById(id);
+  const car = await Car.findById(id).populate('accessories') //.populate('accessories')
   if (car) {
     return carViewModel(car);
   } else {
     return undefined;
   }
-
+  
 }
 async function createCar(car) {
   const result = new Car(car);
@@ -59,16 +60,16 @@ async function attachAccessory(carId,accessoryId){
 
 }
 
-function carViewModel(car) {
-  return {
-    id: car._id,
-    name: car.name,
-    description: car.description,
-    imageUrl: car.imageUrl,
-    price: car.price,
-    accessories: car.accessories
-  };
-}
+// function carViewModel(car) {
+//   return {
+//     id: car._id,
+//     name: car.name,
+//     description: car.description,
+//     imageUrl: car.imageUrl,
+//     price: car.price,
+//     accessories: car.accessories
+//   };
+// }
 module.exports = () => (req, res, next) => {
   req.storage = {
     getAll,

@@ -1,3 +1,10 @@
+// [] login reginster logout user services
+// [] auth contoller with login register,logout
+// [] add owner property to Car,accessory models
+// [] protect routs
+// [] add auth checks to  data modifications
+
+
 const express = require("express");
 const hbs = require("express-handlebars");
 // const { init: storage } = require("./models/storage");

@@ -3,7 +3,7 @@ module.exports = {
     // const cube = await req.storage.getById(req.params.id);
     const id = req.params.id;
     const car = await req.storage.getById(id)
-    console.log(car)
+    console.log('Details >>',car)
     if (car == undefined) {
       res.redirect('/404');
     } else {

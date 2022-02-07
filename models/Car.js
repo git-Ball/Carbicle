@@ -5,7 +5,7 @@ const carSchema = new Schema({
   description: { type: String, default: '' },
   imageUrl: { type: String, default: 'noimage.jpg' },
   price: { type: Number, required: true, min: 0 },
-  accessories:{type:[ObjectId],default:[],ref:'Accesory'}
+  accessories:{type:[ObjectId],default:[],ref:'Accessory'}
 });
 const Car = model("Car", carSchema);
 module.exports = Car;
