@@ -1,7 +1,7 @@
 // [] login reginster logout user services
 // [] auth contoller with login register,logout
 // [] add owner property to Car,accessory models
-// [] protect routs
+// [] protect routes
 // [] add auth checks to  data modifications
 
 
@@ -23,6 +23,8 @@ const { home } = require("./controllers/home.js");
 const carServices = require("./services/cars.js");
 const accessory = require("./controllers/accessory.js");
 const accessoryService = require('./services/accessory.js')
+const authService = require('./services/auth.js')
+const {loginGet,loginPost,registerGet,registerPost} = require('./controllers/auth.js')
 const attach = require('./controllers/attach.js')
 const del = require("./controllers/delete.js");
 const edit = require("./controllers/edit.js");
@@ -42,6 +44,7 @@ async function start() {
 
   app.use(carServices());
   app.use(accessoryService())
+  app.use(authService())
   app.use(express.urlencoded({ extended: false }));
 
   app.get("/", home);
@@ -64,6 +67,12 @@ async function start() {
   app.get("/attach/:id", attach.get);
   app.post("/attach/:id", attach.post);
 
+  app.get('/login',loginGet)
+  app.post('/login',loginPost)
+
+app.route('/register')
+.get(registerGet)
+.post(registerPost);
 
   app.all("*", notFound);
 

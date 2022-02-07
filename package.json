@@ -5,8 +5,10 @@
     "version": "1.0.0",
     "main": "pathToMain",
     "dependencies": {
+        "bcrypt": "^5.0.1",
         "express": "^4.17.1",
         "express-handlebars": "^3.1.0",
+        "express-session": "^1.17.2",
         "mongoose": "^6.1.9",
         "uniqid": "^5.0.3"
     }

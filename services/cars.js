@@ -3,7 +3,7 @@ const Car = require("../models/Car.js");
 const { carViewModel } = require("./util.js");
 
 async function getById(id) {
-  const car = await Car.findById(id).populate('accessories') //.populate('accessories')
+  const car = await Car.findById(id).where({isDeleted:false}).populate('accessories') //.populate('accessories')
   if (car) {
     return carViewModel(car);
   } else {
@@ -18,7 +18,7 @@ async function createCar(car) {
 }
 async function getAll(query) {
   console.log(query);
-  const options = {};
+  const options = {isDeleted:false};
 
   if (query.search) {
     options.name = new RegExp(query.search, "i");
@@ -32,19 +32,21 @@ async function getAll(query) {
     }
     options.price.$lte = Number(query.to) ;
   }
-  console.log(options);
+  // console.log(options);
   // {name: new RegExp(query.search,'i')}
-  const cars = await Car.find(options); //.lean()
+  const cars = await Car.find(options).where({isDeleted:false}); //.lean()
   //VIEW MODEL!
+  console.log(cars)
   return cars.map(carViewModel);
 
 }
 async function deleteById(id) {
-  await Car.findByIdAndDelete(id)
+  // await Car.findByIdAndDelete(id)
+  await Car.findOneAndUpdate(id,{isDeleted:true});
 
 }
 async function updateById(id, car) {
-const existing = await Car.findById(id);
+const existing = await Car.findById(id).where({isDeleted:false});
   existing.name = car.name
   existing.description = car.description
   existing.imageUrl = car.imageUrl
