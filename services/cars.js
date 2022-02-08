@@ -17,7 +17,7 @@ async function createCar(car) {
 
 }
 async function getAll(query) {
-  console.log(query);
+  // console.log(query);
   const options = {isDeleted:false};
 
   if (query.search) {
@@ -36,7 +36,7 @@ async function getAll(query) {
   // {name: new RegExp(query.search,'i')}
   const cars = await Car.find(options).where({isDeleted:false}); //.lean()
   //VIEW MODEL!
-  console.log(cars)
+  // console.log(cars)
   return cars.map(carViewModel);
 
 }

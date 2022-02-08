@@ -27,11 +27,27 @@ if(req.body.password != req.body.repeatPassword){
     res.render('login',{title:'Login'})  
     
   },
-   loginPost (req,res){
+   async loginPost (req,res){
   
+
+
+    try{
+      await req.auth.login(req.body.username,req.body.password)
+      console.log('SUCCESFULL Login >> > > >',req.body) 
+      res.redirect('/')
+     }
+     catch(err){
+      res.redirect('/login')
+       console.error(err.message)
+}
+
     console.log(req.body) 
 
-    res.redirect('/')
+    
   },
 
+  logout(req,res){
+    req.auth.logout()
+    res.redirect('/')
+  }
 }

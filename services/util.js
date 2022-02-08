@@ -32,19 +32,28 @@ model.accessories = model.accessories.map(accessoryViewModel);
 async function hashPassword(password){
   console.log('------------------------------------------BEFORE HASH PW',password)
   const result = await bcrypt.hash(password,10);
-//   const salt = await bcrypt.genSalt(saltRounds);
-// const hash = await bcrypt.hash(myPlaintextPassword, salt);
-  console.log('Hashed PASSWORD CREATED ------------->>>>>>>>>',result)
+console.log('Hashed PASSWORD CREATED ------------->>>>>>>>>',result)
   return result;
 }
 
 async function comparePassword(password,hashedPassword){
-  
-return await bcrypt.compare(password,hashedPassword)
+  return await bcrypt.compare(password,hashedPassword)
+}
+
+function isLoggedIn(){
+  return function (req,res,next){
+    if(req.session.user){
+      next();
+    }
+    else{
+      res.redirect('/login')
+    }
+  }
 }
   module.exports={
       accessoryViewModel,
       carViewModel,
       hashPassword,
-      comparePassword
+      comparePassword,
+      isLoggedIn
   };
