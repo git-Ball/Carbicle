@@ -40,13 +40,40 @@ async function getAll(query) {
   return cars.map(carViewModel);
 
 }
-async function deleteById(id) {
-  // await Car.findByIdAndDelete(id)
-  await Car.findOneAndUpdate(id,{isDeleted:true});
+async function deleteById(id, ownerId) {
+  // await Car.findByIdAndDelete(id);
+  const existing = await Car.findById(id).where({ isDeleted: false });
 
+console.log('owenerID>',ownerId)
+
+  if (existing.owner != ownerId) {
+console.log('  F A L S E')
+
+      return false;
+  }
+
+  await Car.findByIdAndUpdate(id, { isDeleted: true });
+console.log('  T R U E')
+  return true;
 }
-async function updateById(id, car) {
+
+
+
+  // if(existing.owner != ownerId){
+  //   return false;
+  // }
+  //  console.log('DELETE RESULT',result)
+  //   await Car.findByIdAndUpdate(id,{isDeleted:true});
+  //   return true;
+
+async function updateById(id, car,ownerId) {
 const existing = await Car.findById(id).where({isDeleted:false});
+// const existing = await Car.findById(id).where({isDeleted:false});
+
+if(existing.owner != ownerId){
+  return false;
+}
+
   existing.name = car.name
   existing.description = car.description
   existing.imageUrl = car.imageUrl
@@ -54,12 +81,17 @@ const existing = await Car.findById(id).where({isDeleted:false});
   existing.accessories = car.accessories
 
   await existing.save();
+  return true;
 }
-async function attachAccessory(carId,accessoryId){
+async function attachAccessory(carId,accessoryId,ownerId){
   const  existing= await Car.findById(carId)
+  if(existing.owner != ownerId){
+    return false;
+  }
+
   existing.accessories.push(accessoryId)
   await existing.save();
-
+return true;
 }
 
 // function carViewModel(car) {

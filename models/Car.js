@@ -5,12 +5,13 @@ const {
 } = require("mongoose");
 
 const carSchema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true,minlength:3 },
   description: { type: String, default: "" },
   imageUrl: { type: String, default: "noimage.jpg" },
   price: { type: Number, required: true, min: 0 },
   accessories: { type: [ObjectId], default: [], ref: "Accessory" },
-  isDeleted: { Boolean, default: false }
+  isDeleted: {type: Boolean, default: false },
+  owner:{type:ObjectId,ref:'User'}
 });
 const Car = model("Car", carSchema);
 module.exports = Car;

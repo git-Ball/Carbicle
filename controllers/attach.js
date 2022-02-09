@@ -9,7 +9,7 @@ module.exports = {
       ]);
 const existingIds = car.accessories.map(a=>a.id.toString())
       const availableAccessories = accessories.filter(a=> existingIds.includes(a.id.toString()) == false);
-      console.log(car);
+      // console.log(car);
       // console.log(accessories)
       res.render("attach", { title: "Attach Accessory", car, accessories:availableAccessories });
     } catch (err) {
@@ -18,16 +18,23 @@ const existingIds = car.accessories.map(a=>a.id.toString())
     }
   },
   async post(req, res) {
-    console.log(req.body, req.params.id);
+    // console.log(req.body, req.params.id);
     try {
       const carId = req.params.id;
       const accessoryId = req.body.accessory;
 
-      await req.storage.attachAccessory(carId, accessoryId);
-      res.redirect("/");
+      if(await req.storage.attachAccessory(carId, accessoryId,req.session.user.id)){
+        res.redirect("/details/" + carId);
+        
+
+      }
+      else{
+        console.log('meow')
+        res.redirect('/login')
+      }
     } catch (err) {
       console.log("Error creating accesory");
-      console.log("Error creating accesory");
+      
       res.redirect("/attach/" + carId);
     }
   },
