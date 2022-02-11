@@ -9,6 +9,7 @@ module.exports ={
     //       title: Cubicle,
     //       cars
     //   };
-      res.render('index',{cars,title:'Carbicle'})
+      res.render('index' , {cars,title:'Carbicle'});  //query:req.query
+      // errors:[{msg:'Text error'}]}
     }
 }

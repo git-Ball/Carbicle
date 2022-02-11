@@ -24,13 +24,14 @@ const carServices = require("./services/cars.js");
 const accessory = require("./controllers/accessory.js");
 const accessoryService = require("./services/accessory.js");
 const authService = require("./services/auth.js");
-const {
-  loginGet,
-  loginPost,
-  registerGet,
-  registerPost,
-  logout,
-} = require("./controllers/auth.js");
+// const {
+//   loginGet,
+//   loginPost,
+//   registerGet,
+//   registerPost,
+//   logout,
+// } = require("./controllers/auth.js");
+const  authController  = require("./controllers/auth.js");
 const attach = require("./controllers/attach.js");
 const del = require("./controllers/delete.js");
 const edit = require("./controllers/edit.js");
@@ -83,13 +84,13 @@ async function start() {
 
   app.get("/attach/:id", isLoggedIn(), attach.get);
   app.post("/attach/:id", isLoggedIn(), attach.post);
+  app.use(authController);
+  // app.get("/login", loginGet);
+  // app.post("/login", loginPost);
 
-  app.get("/login", loginGet);
-  app.post("/login", loginPost);
+  // app.route("/register").get(registerGet).post(registerPost);
 
-  app.route("/register").get(registerGet).post(registerPost);
-
-  app.get("/logout", logout);
+  // app.get("/logout", logout);
 
   app.all("*", notFound);
 
