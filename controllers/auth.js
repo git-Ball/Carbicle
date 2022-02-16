@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { body, validationResult } = require("express-validator");
+const { mapError } = require("../services/util.js");
 const router = Router();
 router.get("/register", (req, res) => {
   res.render("register", { title: "Register" });
@@ -11,7 +12,7 @@ router.post(
   body("repeatPassword").trim(),
   body("username").isLength({ min: 5 }).withMessage('Username must be at least 5 characters long!')
   .isAlphanumeric().withMessage('Username may contain only alphanumeric!'),
-  body("password").isLength({ min: 8 }).withMessage('Password must be at least 5 characters long!')
+  body("password").isLength({ min: 5 }).withMessage('Password must be at least 5 characters long!')
   .isAlphanumeric().withMessage('Password may contain only alphanumeric!'),
   body("repeatPassword").custom(
     (value, { req}) => value == req.body.password)
@@ -34,7 +35,8 @@ router.post(
       console.log("SUCCESFULL REGISTER >> > > >", req.body);
       res.redirect("/");
     } catch (err) {
-       res.locals.errors = err;
+       res.locals.errors = mapError(err);
+      //  res.locals.errors = err;
       console.error(err.message);
       console.log(err);
 res.render('register',{title: 'Register',data:{username:req.body.username}});

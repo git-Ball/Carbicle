@@ -1,3 +1,5 @@
+const { mapError } = require("../services/util.js");
+
 module.exports = {
   async get(req, res) {
     res.render("create", { title: "Create" });
@@ -20,9 +22,11 @@ console.log(req.session.user.id)
       res.redirect('/');
     }
      catch (err) {
-      res.redirect('/create');
-
       console.log('Error in creating record');
+
+res.locals.errors = mapError(err)
+res.render('create', {title:'Create Listing',car});
+
     }
   }
 };
